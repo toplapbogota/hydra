@@ -3,7 +3,8 @@ const fs = require('fs-extra')
 const md_2_json = require('better-md-2-json');
 const path = require('path')
 //
-const OUTPUT_PATH = path.normalize('../hydra-server/public/data/documentation/')
+const OUTPUT_PATH = path.normalize('../hydra-server/app/src/')
+console.log("OUTPUT_PATH : ",OUTPUT_PATH);
 const PATH_TO_DOCS_MARK_DOWN = '../docs/funcs.md'
 const docs_md = fs.readFileSync(PATH_TO_DOCS_MARK_DOWN,'utf8')
 const json = md_2_json.parse(docs_md);
@@ -106,5 +107,4 @@ function mix_and_parse(functions_,docs_){
  * extra info per function: example and category; 
  * @type {[type]}
  */
-fs.ensureDirSync(OUTPUT_PATH);
 fs.writeJsonSync(OUTPUT_PATH+'composable-glsl-functions-extra.json',functions,{spaces:2})

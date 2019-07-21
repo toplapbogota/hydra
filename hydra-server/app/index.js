@@ -5,6 +5,7 @@ const loop = require('raf-loop')
 const P5  = require('./src/p5-wrapper.js')
 const Gallery  = require('./src/gallery.js')
 const Menu = require('./src/menu.js')
+const Documentation = require('./src/documentation.js')
 
 function init () {
   window.pb = pb
@@ -19,7 +20,8 @@ function init () {
   var pb = new PatchBay()
   var hydra = new HydraSynth({ pb: pb, canvas: canvas, autoLoop: false })
   var editor = new Editor()
-  var menu = new Menu({ editor: editor, hydra: hydra})
+  let documentation = new Documentation();
+  var menu = new Menu({ editor: editor, hydra: hydra, documentation:documentation})
 
   // get initial code to fill gallery
   var sketches = new Gallery(function(code, sketchFromURL) {
@@ -58,7 +60,18 @@ function init () {
   var engine = loop(function(dt) {
     hydra.tick(dt)
   }).start()
-
+  //
+  documentation.hide();
+  documentation.load();
+  documentation.addEventListener('example-code',function (argument) {
+    let code = argument.detail.example;
+    console.log("code : ",code);
+    editor.cm.setValue(code)
+    editor.evalAll()
+  })
+  let docs_toggle_btn = document.getElementById('docs-icon');
+  console.log("docs_toggle_btn : ",docs_toggle_btn);
+  docs_toggle_btn.onclick = documentation.toggle_display.bind(documentation);
 }
 
 window.onload = init

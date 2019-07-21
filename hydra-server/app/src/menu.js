@@ -6,6 +6,7 @@ class Menu {
     this.sketches = obj.sketches
     this.editor = obj.editor
     this.hydra = obj.hydra
+    this.documentation = obj.documentation
 
     // variables related to popup window
     this.closeButton = document.getElementById("close-icon")
@@ -13,6 +14,8 @@ class Menu {
     this.shareButton =  document.getElementById("share-icon")
     this.shuffleButton = document.getElementById("shuffle-icon")
     this.editorText = document.getElementsByClassName('CodeMirror-scroll')[0]
+    this.docsButton =  document.getElementById("docs-icon")
+    this.docs = document.getElementsByClassName('docs')[0]
 
     this.shuffleButton.onclick = this.shuffleSketches.bind(this)
     this.shareButton.onclick = this.shareSketch.bind(this)
@@ -73,6 +76,8 @@ class Menu {
     this.closeButton.className = "fas fa-question-circle icon"
     this.shareButton.classList.remove('hidden')
     this.clearButton.classList.remove('hidden')
+    this.docsButton.classList.remove('hidden')
+    if(this.documentation)this.documentation.show();
     this.editorText.style.opacity = 1
     this.isClosed = true
   }
@@ -82,6 +87,8 @@ class Menu {
     this.closeButton.className = "fas fa-times icon"
     this.shareButton.classList.add('hidden')
     this.clearButton.classList.add('hidden')
+    this.docsButton.classList.add('hidden')
+    if(this.documentation)this.documentation.hide();
     this.editorText.style.opacity = 0.0
     this.isClosed = false
   }

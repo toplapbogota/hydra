@@ -1,0 +1,174 @@
+.docs{
+	--font-size-1:1rem;
+	--font-size-2:0.8rem;
+	--table-border-color:gray;
+	--card-background-color:rgba(256,256,256,0.6);
+	--card-background-color:white;
+	--card-background-color:#111;
+	--card-color-2:#aaa;
+	--table-width:620px;
+}
+.docs{
+	position: absolute;
+	top: 50px;
+	left:50px;
+	z-index: 100;
+	font-family: monospace;
+	width:var(--table-width);
+}
+.docs.invisible{
+	display: none;
+}
+.docs.hidden{
+	left:calc(-1*var(--table-width));
+}
+.docs .div-help{
+	padding:10px;
+	margin:5px;
+	/*position: absolute;*/
+	top: 0px;
+	left: 0px;
+	/*width:300px;*/
+	max-height: 95vh;
+	height: 600px;
+	/*height:200px;*/
+	overflow: scroll;
+	background-color: #222;
+	/*display: none;*/
+	/*z-index: 0;*/
+
+}
+.docs .main-grid{
+	/*display: grid;*/
+	/*width:80%;*/
+	/*grid-template-columns: repeat(2, 1fr);*/
+	/*grid-template-columns: 100px;*/
+	/*grid-auto-flow: column; */
+}
+
+.docs .cell{
+	display: inline-block;
+	min-width: 120px;
+	border-left: 1px solid var(--table-border-color);
+	border-right: 1px solid var(--table-border-color);
+}
+.docs .vec4{
+	background-color: yellow;
+}
+.docs .texture{
+	background-color: orange;
+}
+.docs .float{
+	background-color: lightgreen;
+}
+.docs .image{
+	background-color: lightblue;
+}
+.docs .none{
+	background-color: red;
+}
+.docs .color{
+	background-color: magenta;
+}
+.docs .label{
+	color: black;
+}
+.docs .header{
+	background-color: gray;
+	color: black;
+}
+.docs .input-name
+{
+	min-width: 40px;
+	font-size: var(--font-size-2);
+	color:black;
+}
+.docs .input-type{
+	min-width: 40px;
+	font-size: var(--font-size-1);
+
+}
+.docs .type{
+	border: 1px solid white;
+	cursor: pointer;
+}
+.docs .type:hover{
+	border: 1px solid red;
+}
+.docs .row,.docs .header{
+	display: grid;
+	grid-template-columns: repeat(2, 10rem);
+	grid-auto-flow: column; 
+	grid-auto-columns:  50px;
+	border: 1px solid var(--table-border-color);
+}
+.docs .row:hover{
+	background-color: rgba(255,127,0,0.5);
+	cursor: pointer;
+}
+
+.docs .row.highlight, .docs .type.highlight{
+	background-color: orange;
+	color:black;
+}
+
+.docs h1,.docs h2,.docs h3,.docs h4,.docs h5,.docs h6{
+	padding:0px;
+	margin: 0px;
+}
+.docs .card-container{
+	padding:10px;
+	position: fixed;
+	top:50px;
+	right:0px;
+	width:500px;
+	background-color: var(--card-background-color);
+	color:white;
+}
+.docs .card-container.hidden{
+
+	right:-520px;
+}
+.docs .card-name{
+	border: 1px solid var(--card-color-2);
+}
+#card.docs{
+	height: auto;
+	min-height:200px;
+	max-height:99vh;
+	overflow: auto;
+
+}
+.docs .toggle-btn{
+	width: 20px;
+	position: absolute;
+	cursor: pointer;
+	padding: 5px;
+	background-color: var(--card-background-color);
+}
+.docs .table-open-close{
+	top:10px;
+	right:-25px;
+	background-color: red;
+
+}
+.docs .card-open-close{
+	top:10px;
+	left:-20px;
+	/*color:white;*/
+	/*background-color: white;*/
+}
+.docs pre{
+	border: 1px solid var(--card-color-2);
+	padding: 0px;
+	margin: 0px;
+	background-color: var(--card-background-color);
+	overflow: auto;
+	margin-top: 5px;
+	max-height: 300px; 
+}
+.docs pre span.function-name{
+	font-weight: bold;
+	background-color: #999;
+	color:black;
+}

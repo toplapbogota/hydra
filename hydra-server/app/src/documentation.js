@@ -1,15 +1,6 @@
 
-let GLSL_FUNCS;
-let _;
-if((typeof require!=='undefined')&&(typeof nw==='undefined')){
-  GLSL_FUNCS = require('./composable-glsl-functions-extra.json')
-  _ = require('lodash')
-}
-console.log("GLSL_FUNCS -: ",GLSL_FUNCS);
-if((typeof nw!=='undefined')){
-  _ = require('lodash')
-}
-console.log("_ : ",_);
+let GLSL_FUNCS = require('./composable-glsl-functions-extra.json')
+let _ = require('lodash');
 class Documentation extends EventTarget{
   /**
    * create dom elements
@@ -21,7 +12,6 @@ class Documentation extends EventTarget{
     super();
     // require()
     this.title = 'Composable glsl functions';
-    this.has_been_opened = false;
     this.do_set_dom_elements(container);
   }
   do_set_dom_elements(container){  
@@ -64,7 +54,6 @@ class Documentation extends EventTarget{
     this.container.classList.add('hidden');
   }
   show(){
-    // if(!this.has_been_opened)return;
     this.container.classList.remove('invisible');
     this.container.classList.remove('hidden');
   }
@@ -78,15 +67,6 @@ class Documentation extends EventTarget{
   load(){
     let data = {glslfuncs:GLSL_FUNCS}
     this.load_from_data(data);
-  }
-  init(){
-    let documentation_div = document.createElement('div');
-    document.body.appendChild(documentation_div);
-    documentation_div3.classList.add('docs');
-    this.container
-    // documentation3 = new Documentation3(document,documentation_div3);
-    // fetch_data() 
-
   }
   create_card(){
     let card_container = document.createElement('div');
@@ -303,5 +283,4 @@ class Documentation extends EventTarget{
   }
 }
 
-if((typeof module!=='undefined')&&(typeof nw==='undefined'))
 module.exports = Documentation;

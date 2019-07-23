@@ -64,9 +64,9 @@ class Documentation extends EventTarget{
     this.container.classList.add('hidden');
   }
   show(){
-    if(!this.has_been_opened)return;
-    this.container.classList.add('invisible');
-    // this.container.classList.add('hidden');
+    // if(!this.has_been_opened)return;
+    this.container.classList.remove('invisible');
+    this.container.classList.remove('hidden');
   }
   toggle_display(){
     this.container.classList.toggle('invisible');
@@ -94,6 +94,7 @@ class Documentation extends EventTarget{
     card_container.classList.add('hidden')
     let card = document.createElement('div');
     let card_open_close = document.createElement('div');
+    this.card_open_close = card_open_close;
     card_container.appendChild(card);
     card_container.appendChild(card_open_close);
     card_open_close.addEventListener('click',on_open_close)
@@ -103,6 +104,7 @@ class Documentation extends EventTarget{
     card_open_close.innerHTML = "X";
     card_open_close.classList.add('toggle-btn');
     card_open_close.classList.add('card-open-close');
+    card_open_close.classList.add('hidden');
     card.id="card";
     return {card_container,card};
   }
@@ -249,6 +251,7 @@ class Documentation extends EventTarget{
     this.container.classList.add('hidden')
     console.log("container : ",this.container);
     this.dispatchEvent(event)
+    this.card_open_close.classList.remove('hidden');
   }
   do_show_card(name){
     let glsl_function = this.data.glslfuncs[name];

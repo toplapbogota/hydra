@@ -152,6 +152,9 @@
 	background-color: red;
 
 }
+.docs .card-open-close.hidden{
+	display: none;
+}
 .docs .card-open-close{
 	top:10px;
 	left:-20px;

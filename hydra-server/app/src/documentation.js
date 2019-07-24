@@ -10,7 +10,8 @@ class Documentation extends EventTarget{
    */
   constructor(container){
     super();
-    // require()
+    this.is_copying = false;
+    this.glsl_function = '';
     this.title = 'Composable glsl functions';
     this.do_set_dom_elements(container);
   }
@@ -54,8 +55,8 @@ class Documentation extends EventTarget{
     this.container.classList.add('hidden');
   }
   show(){
-    this.container.classList.remove('invisible');
-    this.container.classList.remove('hidden');
+    // this.container.classList.remove('invisible');
+    // this.container.classList.remove('hidden');
   }
   toggle_display(){
     this.container.classList.toggle('invisible');
@@ -146,8 +147,23 @@ class Documentation extends EventTarget{
     let spans_inputs = inputs_types.map(x=>{
       return `<span data-name="${x}" class="label ${x}">${x}</span>`
     })
-    head_div.innerHTML += `<p class="filter-btns">filter by types: ${types_span}<p>`
-    head_div.innerHTML += `<p>input types labels: ${spans_inputs.join(' ')}<p>`
+    head_div.innerHTML += `<p class="filter-btns">filter by types: ${types_span}</p>`
+    head_div.innerHTML += `<p>input types labels: ${spans_inputs.join(' ')}</p>`
+    head_div.innerHTML += `<label  for="is-copying">is copying to editor</label>`
+    head_div.innerHTML += `<input type="checkbox" id="is-copying"></input>`
+    let is_copying_input = document.querySelector("input#is-copying")
+    console.log("is_copying_input : ",is_copying_input);
+    is_copying_input.addEventListener('click',(ev)=>{
+      // console.log("ev : ",ev);
+      // console.log("ev : ",ev.target);
+      let chkbx = ev.target;
+      // console.log("chkbx : ",chkbx);
+      // console.log("chkbx : ",chkbx.value);
+      // console.log("chkbx : ",chkbx.checked);
+      this.is_copying = chkbx.checked;
+      console.log("is_copying : ",this.is_copying);
+      // console.log("this : ",this);
+    })
     let types_spans = document.querySelectorAll("span.type")
     types_spans.forEach( (argument)=> {
       argument.addEventListener('click',this.on_type_click.bind(this),false)
@@ -226,11 +242,14 @@ class Documentation extends EventTarget{
     let name = target.getAttribute('data-name');
     this.do_show_card(name);
     let glsl_function = this.data.glslfuncs[name];
-    let example = glsl_function.example;
-    let event = new CustomEvent('example-code',{detail:{example}});
+    this.glsl_function = glsl_function;
+    // let example = glsl_function.example;
+    // let event = new CustomEvent('example-code',{detail:{example}});
     this.container.classList.add('hidden')
-    console.log("container : ",this.container);
-    this.dispatchEvent(event)
+    // console.log("container : ",this.container);
+    if(this.is_copying){
+      this.do_copy_example()
+    }
     this.card_open_close.classList.remove('hidden');
   }
   do_show_card(name){
@@ -241,6 +260,9 @@ class Documentation extends EventTarget{
     let type      = glsl_function.type;
     let glsl      = glsl_function.glsl;
     //
+    let btn = document.querySelector('.copy-2-editor-btn');
+    if(btn)
+        btn.removeEventListener('click',this.do_copy_example.bind(this))
     let card = this.card
     card.innerHTML='';
     let inner_html = '';
@@ -274,7 +296,19 @@ class Documentation extends EventTarget{
 
     }
     card.innerHTML=inner_html;
+    if(!this.is_copying&&example.trim()){
+      console.log("example : ",example);
+        card.innerHTML+=`<button class="copy-2-editor-btn">copy example to editor</button>`
+        let btn = document.querySelector('.copy-2-editor-btn');
+        btn.addEventListener('click',this.do_copy_example.bind(this))
+    }
     this.card_container.classList.remove('hidden')
+  }
+  do_copy_example(ev){
+    let glsl_function = this.glsl_function
+    let example = glsl_function.example;
+    let event = new CustomEvent('example-code',{detail:{example}});
+    this.dispatchEvent(event)
   }
   _do_remove_highlight(class_name) {
     document.body.querySelectorAll('.'+class_name+'.highlight').forEach(function (argument) {

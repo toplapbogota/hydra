@@ -1,11 +1,9 @@
 
+const EventEmitter = require('events');
 
-
-class Menu {
-  constructor (obj) {
-    this.sketches = obj.sketches
-    this.editor = obj.editor
-    this.hydra = obj.hydra
+class Menu extends EventEmitter{
+  constructor () {
+    super();
 
     // variables related to popup window
     this.closeButton = document.getElementById("close-icon")
@@ -30,21 +28,11 @@ class Menu {
   }
 
   shuffleSketches() {
-    this.clearAll()
-    this.sketches.setRandomSketch()
-    this.editor.cm.setValue(this.sketches.code)
-    this.editor.evalAll()
+    this.emit('shuffle-sketches');
   }
 
   shareSketch() {
-    this.editor.evalAll((code, error) => {
-      console.log('evaluated', code, error)
-      if(!error){
-        this.showConfirmation( (name) => {
-          this.sketches.shareSketch(code, this.hydra, name)
-        }, () => this.hideConfirmation() )
-      }
-    })
+    this.emit('share-sketches');
   }
 
   showConfirmation(successCallback, terminateCallback) {
@@ -62,10 +50,7 @@ class Menu {
   }
 
   clearAll() {
-    hush()
-    this.sketches.clear()
-    this.editor.clear()
-    //@todo: add clear/reset function to hydra
+    this.emit('clear-all')
   }
 
   closeModal () {

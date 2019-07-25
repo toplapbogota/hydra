@@ -54,6 +54,7 @@ class Menu extends EventEmitter{
   }
 
   closeModal () {
+    this.emit('close-modal')
     document.getElementById("info-container").className = "hidden"
     this.closeButton.className = "fas fa-question-circle icon"
     this.shareButton.classList.remove('hidden')
@@ -63,6 +64,7 @@ class Menu extends EventEmitter{
   }
 
   openModal () {
+    this.emit('open-modal')
     document.getElementById("info-container").className = ""
     this.closeButton.className = "fas fa-times icon"
     this.shareButton.classList.add('hidden')
